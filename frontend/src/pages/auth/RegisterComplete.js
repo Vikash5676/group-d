@@ -16,7 +16,7 @@ const RegisterComplete = () => {
     if (authSlice && authSlice.token) history("/");
   }, []);
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
     // validation
     if (!email || !password) {
@@ -29,30 +29,25 @@ const RegisterComplete = () => {
       return;
     }
 
-    try {
-      const result = await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-      console.log("RESULT", result);
-      if (result.user) {
-        // remove user email fom local storage
-        // window.localStorage.removeItem("emailForRegistration");
-        // // get user id token
-        // let user = auth.currentUser;
-        // await user.updatePassword(password);
-        // const idTokenResult = await user.tokenaccess;
-        // // redux store
-        // console.log("user", user, "idTokenResult", idTokenResult);
-        // redirect
-        console.log(auth.currentUser);
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((res) => {
+        console.log(res.user);
         history("/login");
-      }
-    } catch (error) {
-      console.log(error);
-      toast.error(error.message);
-    }
+      })
+      // remove user email fom local storage
+      // window.localStorage.removeItem("emailForRegistration");
+      // // get user id token
+      // let user = auth.currentUser;
+      // await user.updatePassword(password);
+      // const idTokenResult = await user.tokenaccess;
+      // // redux store
+      // console.log("user", user, "idTokenResult", idTokenResult);
+      // redirect
+      // console.log(auth.currentUser);
+      .catch((error) => {
+        console.log(error);
+        toast.error(error.message);
+      });
   };
 
   const completeRegistrationForm = () => (

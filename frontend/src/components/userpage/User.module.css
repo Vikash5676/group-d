@@ -2,7 +2,7 @@
   width: 84vw;
   height: 100vw;
   top: 10%;
-  position: fixed;
+  position: absolute;
   right: 2%;
 }
 .header {

@@ -31,7 +31,7 @@ const Login = () => {
   const history = useNavigate();
   const { authSlice } = useSelector((state) => ({ ...state }));
   const data = localStorage.getItem("data");
-  console.log(data.email);
+  // console.log(data.email);
   useEffect(() => {
     if (authSlice.token && authSlice) history("/");
   }, [authSlice]);

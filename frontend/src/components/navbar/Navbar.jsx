@@ -10,6 +10,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import SidebarMenu from "./SidebarMenu";
 import "./Navbar.css";
 import { useSelector } from "react-redux";
+import { Icon } from "@iconify/react";
 
 const routes = [
   {
@@ -25,12 +26,12 @@ const routes = [
   {
     path: "/inventory",
     name: "Product",
-    icon: <MdMessage />,
+    icon: <Icon icon="dashicons:products" />,
   },
   {
     path: "/orderform",
     name: "OrderForm",
-    icon: <BiAnalyse />,
+    icon: <Icon icon="ant-design:form-outlined" />,
   },
   {
     path: "/orderlist",

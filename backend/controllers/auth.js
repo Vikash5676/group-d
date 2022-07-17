@@ -39,13 +39,20 @@ exports.getAllUser = async (req, res) => {
 
 exports.updateProFile = async (req, res, next) => {
   // console.log(req.body.name);
-  console.log(req.body.email);
+  // console.log(req.body.id);
   const newUserData = {
     name: req.body.name,
   };
   // wehave to add cludinary later...
 
-  const user = await User.findOneAndUpdate(req.body.email, newUserData);
+  const user = await User.findByIdAndUpdate(req.body.id, newUserData);
+
+  res.json(user);
+};
+
+exports.deleteProfile = async (req, res) => {
+  console.log(req.body._id);
+  const user = await User.findByIdAndDelete(req.body._id);
 
   res.json(user);
 };

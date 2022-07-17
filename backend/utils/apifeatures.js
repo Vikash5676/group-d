@@ -5,7 +5,7 @@ class ApiFeatures {
   } // queryStr is value  of our keyword.
 
   search() {
-    console.log(this.queryStr);
+    // console.log(this.queryStr);
     const keyword = this.queryStr.keyword
       ? {
           name: {
@@ -14,9 +14,14 @@ class ApiFeatures {
           },
         }
       : {};
-    //console.log(keyword)
-    this.query = this.query.find({ ...keyword });
-    return this;
+    console.log(keyword);
+    if (keyword === "") {
+      this.query = this.query.find();
+      return this;
+    } else {
+      this.query = this.query.find({ ...keyword });
+      return this;
+    }
   }
 
   // filter----------------------

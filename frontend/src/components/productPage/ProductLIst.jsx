@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const ProductList = () => {
   const [details, setDetails] = useState([]);
-  const [visible, setvisible] = useState();
+  const [visible, setvisible] = useState(false);
   const [search, setSearch] = useState("");
 
   const dispatch = useDispatch();
@@ -15,28 +15,19 @@ const ProductList = () => {
   const updateHandle = () => {};
 
   const foo = () => {
-    dispatch(fetchProducts());
+    dispatch(fetchProducts(search));
     setDetails(data.products.products);
-    setvisible(data.products);
+    setvisible(true);
   };
 
   // let param = document.getElementById("search");
   useEffect(() => {
     foo();
-    dispatch(fetchProducts(search));
-    setDetails(data.products.products);
-    setvisible(data.products);
+
     // setvisible(true);
-  }, [search, visible]);
+  }, [visible, search]);
   const changeHandler = (e) => {
     setSearch(e.target.value);
-  };
-
-  const clickHandler = () => {
-    // setvisible(true);
-    // e.preventDefault();
-    // dispatch(fetchProducts(search));
-    // setDetails(data.products.products);
   };
 
   const createProductBtn = () => {
@@ -65,7 +56,7 @@ const ProductList = () => {
         id="search"
         onChange={changeHandler}
       />
-      <button onClick={clickHandler}>click</button>
+
       <div>
         <button
           type="button"

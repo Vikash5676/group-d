@@ -18,11 +18,13 @@ const User = () => {
   const onSearch = () => {};
 
   const users1 = useSelector((state) => state.authSlice.users);
-  const { authSlice } = useSelector((state) => ({ ...state }));
   const [values, setValues] = useState([]);
   const [isModalVisible, setIsModelVisible] = useState(false);
   const [isModalVisible1, setIsModalVisible1] = useState(false);
-  console.log(users1);
+  const [isModalVisible2, setIsModalVisible2] = useState(false);
+  const data = JSON.parse(localStorage.getItem("data"));
+
+  console.log(data.token);
   // const [data1, setdata1] = useState({});
   const [editValues, setEditValues] = useState({
     id: "",
@@ -37,10 +39,12 @@ const User = () => {
       name: rec.name,
       email: rec.email,
     });
+
     setIsModelVisible(true);
   };
+
   const fn = async (user) => {
-    console.log(user);
+    // console.log(user);
     await axios
       .post(
         `${config.API_URL}/admin/users`,
@@ -56,14 +60,16 @@ const User = () => {
         setValues(users1);
         setIsModalVisible1(true);
       });
-    setIsModalVisible1(false);
   };
-  useEffect(() => {
-    fn(authSlice.token);
-  }, [isModalVisible, isModalVisible1]);
 
-  const handleOk = (user) => {
-    axios
+  useEffect(() => {
+    fn(data.token);
+    setIsModalVisible1(false);
+    console.log(isModalVisible, isModalVisible1);
+  }, [isModalVisible, isModalVisible1, isModalVisible2]);
+
+  const handleOk = async () => {
+    await axios
       .put(`${config.API_URL}/user/update`, editValues)
       .then((response) => {
         // will hide the model
@@ -73,7 +79,14 @@ const User = () => {
       .catch((err) => {
         console.log(err);
       });
-    setIsModalVisible1(false);
+  };
+  const deletes = async (del) => {
+    // console.log(del._id);
+    if (data.id !== del._id) {
+      await axios.post(`${config.API_URL}/user/delete`, del).then((res) => {
+        setIsModalVisible2(true);
+      });
+    }
   };
 
   const handleCancel = () => {
@@ -142,9 +155,14 @@ const User = () => {
           >
             <EditOutlined />
           </Button>
-          <Button type="danger" style={{ borderRadius: "50%" }}>
+          <Button
+            type="danger"
+            style={{ borderRadius: "50%" }}
+            onClick={() => deletes(record)}
+          >
             <DeleteOutlined />
           </Button>
+          <p>{record._id}</p>
         </Space>
       ),
     },
@@ -208,7 +226,7 @@ const User = () => {
           <Modal
             title="Update User"
             visible={isModalVisible}
-            onOk={() => handleOk(authSlice.token)}
+            onOk={() => handleOk()}
             onCancel={handleCancel}
           >
             <div style={{ textAlign: "center", margin: "1rem" }}>

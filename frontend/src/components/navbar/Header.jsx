@@ -34,6 +34,7 @@ const Header = () => {
   const logoutbtn = () => {
     // firebase.auth().signOut();
     signOut(auth);
+    localStorage.setItem("data", "");
     // Sign-out successful.
     dispatch(logout(""));
     history("/login");

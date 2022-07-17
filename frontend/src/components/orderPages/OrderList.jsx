@@ -25,7 +25,7 @@ const OrderList = () => {
 
   useEffect(() => {
     lists(authSlice.token);
-  });
+  }, []);
   return (
     <div style={{ position: "fixed", right: "1%", top: "10%", width: "84vw" }}>
       <div className="top-navbar">

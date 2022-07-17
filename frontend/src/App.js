@@ -21,6 +21,8 @@ import OrderForm from "./components/orderPages/OrderForm";
 import OrderList from "./components/orderPages/OrderList";
 
 function App() {
+  const data = localStorage.getItem("data");
+
   const dispatch = useDispatch();
   //   const history = useNavigate();
   //   const [id, setId] = useState();
@@ -43,9 +45,10 @@ function App() {
   useEffect(() => {
     // console.log(auth.currentUser);
     const unsubscribe = auth.onAuthStateChanged(async (user) => {
-      if (user) {
+      if (user && data !== "") {
         const idTokenResult = await user.getIdTokenResult();
-        console.log("user", user);
+
+        // console.log("user", user);
         dispatch(
           login({
             email: user.email,
