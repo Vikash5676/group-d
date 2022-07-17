@@ -47,7 +47,7 @@ const RegisterComplete = () => {
         // console.log("user", user, "idTokenResult", idTokenResult);
         // redirect
         console.log(auth.currentUser);
-        history("/");
+        history("/login");
       }
     } catch (error) {
       console.log(error);
